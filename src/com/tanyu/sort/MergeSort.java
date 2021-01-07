@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @author tanyu
  * @version 1.0
- * @description: TODO
+ * @description: 归并排序
  * @date 2021/1/5 3:09 下午
  */
 public class MergeSort {
@@ -16,44 +16,43 @@ public class MergeSort {
         System.out.println(Arrays.toString(arr));
     }
 
-
-
-    public static void sort(int[] nums) {
-        int[] temp = new int[nums.length];
-        sort(nums, 0, nums.length - 1, temp);
+    private static void sort(int[] arr) {
+        int[] temp = new int[arr.length];
+        sort(arr, 0, temp.length - 1, temp);
     }
 
-    private static void sort(int[] nums, int left, int right, int[] temp) {
-        if (left < right) {
-            int mid = (left + right) / 2;
-            sort(nums, left, mid, temp);
-            sort(nums, mid + 1, right, temp);
-            merge(nums, left, mid, right, temp);
+    private static void sort(int[] arr, int low, int high, int[] temp) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            sort(arr, low, mid, temp);
+            sort(arr, mid + 1, high, temp);
+            merge(arr, low, mid, high, temp);
         }
     }
 
-    private static void merge(int[] nums, int left, int mid, int right, int[] temp) {
-        int i = left;
+    private static void merge(int[] arr, int low, int mid, int high, int[] temp) {
+        int i = low;
         int j = mid + 1;
         int t = 0;
 
-        while (i <= mid && j <= right) {
-            if (nums[i] > nums[j]) {
-                temp[t++] = nums[j++];
+        while (i <= mid && j <= high) {
+            if (arr[i] <= arr[j]) {
+                temp[t++] = arr[i++];
             }else {
-                temp[t++] = nums[i++];
+                temp[t++] = arr[j++];
             }
         }
 
         while (i <= mid) {
-            temp[t++] = nums[i++];
+            temp[t++] = arr[i++];
         }
-        while (j <= mid) {
-            temp[t++] = nums[j++];
+
+        while (j <= high) {
+            temp[t++] = arr[j++];
         }
         t = 0;
-        while (left <= right) {
-           nums[left++] = temp[t++];
+        while (low <= high) {
+            arr[low++] = temp[t++];
         }
     }
 }
